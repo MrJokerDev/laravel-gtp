@@ -41,6 +41,7 @@ class AuthController extends Controller
             $validator = $request->validate([
                 'name' => 'required|string|between:2,100',
                 'email' => 'required|string|email|max:100|unique:users',
+                'phone_number' => 'required|integer|min:9,max:12|unique:users',
                 'password' => 'required|string|confirmed|min:6',
             ]);
 
@@ -62,8 +63,7 @@ class AuthController extends Controller
         }catch (\Exception $e){
             return response()->json([
                 'success' => false,
-                'message' => 'Error registering user',
-                'error' => $e->getMessage()
+                'message' => $e->getMessage()
             ], 401);
         }
 
